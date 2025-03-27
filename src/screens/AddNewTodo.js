@@ -1,0 +1,78 @@
+import { StyleSheet, Text, View } from 'react-native';
+
+export default function AddNewTodo() {
+
+  return (
+    <View style={styles.container}>
+        {/*Header*/}
+      <View style={styles.header}>
+        <Text style={styles.title}>Add New Todo</Text>
+      </View>
+
+      {/*Footer for button*/}
+      <View style={styles.addButton}>
+        <Text style={styles.addButtonText}>Add New Todo</Text>
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  header: {
+    alignItems: 'center',
+    padding: 20,
+    marginTop: 70,
+    paddingVertical: 5,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+  },
+  listContainer: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    alignSelf: 'stretch',
+
+  },
+  todoItem: {
+    backgroundColor: '#add8e6',
+    padding: 10,
+    marginBottom: 10,
+    marginTop: 10,
+    borderRadius: 5,
+    alignItems: 'center',
+    width: '90%',
+    height: 40,
+  },
+  todoText: {
+      //fontWeight: 'bold',
+      fontSize: 15,
+  },
+  separator: {
+    width: '100%',
+    borderBottomWidth: 2,
+    borderBottomColor: 'black',
+    marginBottom: 10,
+  },
+  addButton: {
+    marginBottom: 30,
+    marginTop: 10,
+    padding: 10,
+    backgroundColor: '#32a87b',
+    alignSelf: 'stretch',
+  },
+  addButtonText: {
+    fontSize: 15,
+    color: 'black',
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+});
