@@ -1,7 +1,9 @@
 import {View, StyleSheet, Text, Pressable} from "react-native";
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 
-export default function AddButton({ label, fun = ()=> {}, width=90 }){
+
+export default function Button({ label, fun = ()=> {}, width=120 }){
     return (
         <Pressable
             style={({ pressed }) =>
@@ -10,7 +12,7 @@ export default function AddButton({ label, fun = ()=> {}, width=90 }){
         onPress={fun}
         >
             <View style={styles.buttonContent}>
-                <Text style={styles.addButtonText}>{label}</Text>
+                <Text>{label}</Text>
             </View>
             
         </Pressable>
@@ -19,19 +21,21 @@ export default function AddButton({ label, fun = ()=> {}, width=90 }){
 
 const styles = StyleSheet.create ({
     addButton: {
-        width: "90%",
+        width: "100%",
         height: 50,
-        backgroundColor: '#32a87b',
+        backgroundColor: 'blue',
         alignSelf: 'center',
         justifyContent: 'center',
         alignItems: 'center',
         paddingHorizontal: 10,
+        flexDirection: 'row',
+        borderRadius: 10,
+
       },
     buttonContent: {
         flexDirection: 'row', 
-        justifyContent: 'center', 
         alignItems: 'center', 
-        flex: 1,
+
         },
       addButtonText: {
         fontSize: 15,

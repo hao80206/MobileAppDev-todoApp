@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
-import AddButton from '../components/AddButton';
+import Button from '../components/Button';
+import Ionicons from "react-native-vector-icons/Ionicons";
 
 export default function Home( {navigation}) {
 
@@ -24,11 +25,21 @@ export default function Home( {navigation}) {
 
       <Text style={styles.separator}></Text>
 
-      {/*Footer for button*/}
-      <View style={styles.addButton}>
-        <AddButton label="Add New Todo" fun={() => navigation.navigate("AddNewTodo")}></AddButton>
-      </View>
-    </View>
+        {/*Footer for button*/}
+        <View style={styles.buttonPanel}>
+            <Button
+                label={
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                    <Ionicons name="add-circle" size={25} color="white" />
+                    <Text style={{ marginLeft: 5, color: 'white', fontSize: 16 }}>Add New Todo</Text>
+                    </View>
+                }
+                width={300}
+                fun={() => navigation.navigate("AddNewTodo")}
+            />
+        </View>
+        </View>
+
   );
 }
 
@@ -41,8 +52,8 @@ const styles = StyleSheet.create({
   },
   header: {
     alignItems: 'center',
-    padding: 20,
-    marginTop: 70,
+    //padding: 20,
+    //marginTop: 70,
     paddingVertical: 5,
   },
   title: {
@@ -84,7 +95,14 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',
-    
+    flexDirection: 'row',
+    borderRadius: 10,
   },
+  buttonPanel: {
+    flexDirection: 'row',  
+    justifyContent: 'space-between',
+    width: '80%',
+    marginBottom: 20,
+    },
   
 });
