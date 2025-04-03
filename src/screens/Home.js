@@ -15,7 +15,7 @@ export default function Home( {navigation, route}) {
     { id: 3, title: "Write report", description: "Finish and submit the lab report", isDone: false }
   ]);
 
-  // Check if new todo was added when returning from AddNewTodo
+  // useEffect works every time new Todo is added and update setTodoList
   useEffect(() => {
     if (route.params?.newTodo) {
       // Ensure the new todo has a unique ID
@@ -30,11 +30,21 @@ export default function Home( {navigation, route}) {
     setTodoList(prevList => prevList.filter(todo => todo.id !==id));
   };
 
+  const finishTodo = (id) => {
+    setTodoList(prevList => {
+      const updatedList = prevList.map(todo =>
+        todo.id === id ? { ...todo, isDone: true } : todo
+      );
+      return updatedList;
+    });
+  };
+
   const renderTodo = ({item}) => {
     return (
       <Todo 
-      todo = {item}
-      deleteTodo = {deleteTodo}
+        todo = {item}
+        deleteTodo = {deleteTodo}
+        finishTodo = {finishTodo}
       />
     )
   }

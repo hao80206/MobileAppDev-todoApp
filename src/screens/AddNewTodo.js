@@ -8,16 +8,16 @@ import Title from '../components/Title';
 
 export default function AddNewTodo( {navigation, route}) {
 
-    //const [todoList, setTodoList] = useState([]);
     const [task, setTask] = useState("");
     const [description, setDescription] = useState ("");
 
-    //Function for adding newTodo
+    //Function for adding newTodo and input validation
     const saveTodo = (title, description) => {
       if (!title?.trim() || !description?.trim()) {
         Alert.alert("Both fields are required", "Please enter a title and description.");
         return;
       }
+
       const newTodo = {
           id: Date.now(), 
           title: title,
@@ -28,18 +28,19 @@ export default function AddNewTodo( {navigation, route}) {
       // Show notification for success
         Alert.alert(
           'Success!!',
-          "Todo Added Successfully!", // Message
-          [{ text: "OK" }] // Button
+          "Todo Added Successfully!", 
+          [{ text: "OK" }] 
       );
 
       // Use setTodoList passed via route params to update the todo list in Home
       route.params.setTodoList((prevTodos) => [...prevTodos, newTodo]);
       navigation.goBack();
 
-      setTask(""); // Clear input fields
+      setTask(""); 
       setDescription("");
-      }
+    }
 
+    
 
   //-------------------------Screen View --------------------------------//
   return (

@@ -42,7 +42,7 @@ const styles = StyleSheet.create ({
         color: 'white',
         textAlign: 'center',
         fontWeight: 'bold',
-        maxWidth: "100%", // Ensure text doesn't overflow
+        maxWidth: "100%", 
         flexShrink: 1,
       },
 })

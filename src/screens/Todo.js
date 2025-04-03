@@ -4,7 +4,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { useState } from "react";
 
 
-export default function Todo({todo, deleteTodo}) {
+export default function Todo({todo, deleteTodo, finishTodo}) {
     const [expanded, setExpanded] = useState(false);
   
 
@@ -12,6 +12,7 @@ export default function Todo({todo, deleteTodo}) {
         setExpanded(!expanded);
     }; 
 
+//-------------------------Screen View --------------------------------//
 
     return (
       <View style={styles.todoItem}>
@@ -39,21 +40,22 @@ export default function Todo({todo, deleteTodo}) {
             <View style={styles.controls}>
               <Button
                 label={
-                  <Ionicons name="close-circle-outline" size={24} color="red" />
+                  <Ionicons name="trash-outline" size={24} color="red" />
                 }
                 width={50}
                 fun={() => deleteTodo(todo.id)}
                 
               />
 
-            {!todo.isDone && (
+        
+            {!todo.isDone && ( //tick button will be appeared only isDone is false
                 <Button
-                label={
-                  <Ionicons name="checkmark-circle-outline" size={24} color="green" />
-                }
-                width={50}
-                fun={() => finishTodo(todo.id)}
-              />
+                    label={
+                    <Ionicons name="checkmark-circle-outline" size={24} color="green" />
+                    }
+                    width={50}
+                    fun={() => finishTodo(todo.id)}
+                />
             )}
               
             </View>
