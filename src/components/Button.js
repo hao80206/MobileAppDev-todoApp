@@ -3,11 +3,11 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 
 
 
-export default function Button({ label, fun = ()=> {}, width=120 }){
+export default function Button({ label, fun = ()=> {}, width=120, backgroundColor = "#add8e6" }){
     return (
         <Pressable
             style={({ pressed }) =>
-                pressed ? [styles.addButton, {opacity: 0.5}, {width}] : [styles.addButton,{width}]
+                pressed ? [styles.addButton, {opacity: 0.5 , width, backgroundColor}] : [styles.addButton,{width, backgroundColor}]
         }
         onPress={fun}
         >
@@ -23,7 +23,7 @@ const styles = StyleSheet.create ({
     addButton: {
         width: "100%",
         height: 50,
-        backgroundColor: 'blue',
+        backgroundColor: '#add8e6',
         alignSelf: 'center',
         justifyContent: 'center',
         alignItems: 'center',

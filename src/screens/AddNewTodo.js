@@ -1,20 +1,54 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Alert } from 'react-native';
 import { useState } from "react";
 import { TextInput } from 'react-native-gesture-handler';
+
 import Button from '../components/Button';
 import Ionicons from "react-native-vector-icons/Ionicons";
+import Title from '../components/Title';
 
-export default function AddNewTodo( {navigation}) {
+export default function AddNewTodo( {navigation, route}) {
+
+    //const [todoList, setTodoList] = useState([]);
     const [task, setTask] = useState("");
     const [description, setDescription] = useState ("");
+
+    //Function for adding newTodo
+    const saveTodo = (title, description) => {
+      if (!title?.trim() || !description?.trim()) {
+        Alert.alert("Both fields are required", "Please enter a title and description.");
+        return;
+      }
+      const newTodo = {
+          id: Date.now(), 
+          title: title,
+          description: description,
+          isDone: false
+      };
+
+      // Show notification for success
+        Alert.alert(
+          'Success!!',
+          "Todo Added Successfully!", // Message
+          [{ text: "OK" }] // Button
+      );
+
+      // Use setTodoList passed via route params to update the todo list in Home
+      route.params.setTodoList((prevTodos) => [...prevTodos, newTodo]);
+      navigation.goBack();
+
+      setTask(""); // Clear input fields
+      setDescription("");
+      }
+
+
+  //-------------------------Screen View --------------------------------//
   return (
     <View style={styles.container}>
-    {/*Header*/}
-      <View style={styles.header}>
-        <Text style={styles.title}>Add New Todo</Text>
-      </View>
+      {/*Header*/}
+      <Title title = {"Add New Todo"}/>
 
       <Text style={styles.separator}></Text>
+
     {/* Form */}
     <View style={styles.formContainer}>
         
@@ -37,11 +71,12 @@ export default function AddNewTodo( {navigation}) {
         <View style={styles.buttonPanel}>
             <Button label={
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Ionicons name="backspace-outline" size={20} color="white" />
+                    <Ionicons name="backspace-outline" size={25} color="white" />
                     <Text style={{ marginLeft: 5, color: 'white', fontSize: 16 }}>Cancel</Text>
                 </View>
             }
             fun={() => navigation.goBack()} 
+            backgroundColor = "blue"
             />
             
             <Button label={
@@ -50,7 +85,8 @@ export default function AddNewTodo( {navigation}) {
                     <Text style={{ marginLeft: 5, color: 'white', fontSize: 16 }}>Save</Text>
                 </View>
             }
-            fun={() => navigation.goBack()} 
+            fun={() => saveTodo(task, description)}
+            backgroundColor = "blue"
             />
         </View>
     </View>
@@ -64,21 +100,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  header: {
-    alignItems: 'center',
-    //padding: 20,
-    //marginTop: 90,
-    paddingVertical: 5,
-  },
   formContainer: {
     flex: 1,
     width: "100%",
 
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
   },
   inputTitle: {
     //flex: 1,

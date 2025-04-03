@@ -1,29 +1,59 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, FlatList, ScrollView } from 'react-native';
 import Button from '../components/Button';
 import Ionicons from "react-native-vector-icons/Ionicons";
+import Title from "../components/Title";
+import { useState, useEffect } from "react";
+import Todo from "./Todo";
 
-export default function Home( {navigation}) {
 
-    const todo_list = ['Do mini Quiz 1','Watch lecture 1', 'Write report' ];
+export default function Home( {navigation, route}) {
 
+  // Initial Todo List Object
+  const [todo_list, setTodoList] = useState ([
+    { id: 1, title: "Do mini Quiz 1", description: "Complete Quiz 1 before midnight", isDone: false },
+    { id: 2, title: "Watch lecture 1", description: "Watch the recorded lecture for Week 1", isDone: false },
+    { id: 3, title: "Write report", description: "Finish and submit the lab report", isDone: false }
+  ]);
+
+  // Check if new todo was added when returning from AddNewTodo
+  useEffect(() => {
+    if (route.params?.newTodo) {
+      // Ensure the new todo has a unique ID
+      const newTodo = route.params.newTodo;
+      newTodo.id = todo_list.length ? todo_list[todo_list.length - 1].id + 1 : 1; // Auto-increment ID
+      setTodoList(prevList => [...prevList, newTodo]);
+    }
+    navigation.setParams({ newTodo: undefined});
+  }, [route.params?.newTodo]);
+
+  const deleteTodo = (id) => {
+    setTodoList(prevList => prevList.filter(todo => todo.id !==id));
+  };
+
+  const renderTodo = ({item}) => {
+    return (
+      <Todo 
+      todo = {item}
+      deleteTodo = {deleteTodo}
+      />
+    )
+  }
+
+  //-------------------------Screen View --------------------------------//
   return (
     <View style={styles.container}>
         {/*Header*/}
-      <View style={styles.header}>
-        <Text style={styles.title}>My Todo List</Text>
-      </View>
+      <Title title = {"My Todo List"}/>
+      <View style={styles.separator}></View>
 
-      <Text style={styles.separator}></Text>
-
-      <View style={styles.listContainer}>
-        {todo_list.map((todo, index) => (
-          <View key={index} style={styles.todoItem}>
-            <Text style={styles.todoText}>{todo}</Text>
-          </View>
-        ))}
-      </View>
-
-      <Text style={styles.separator}></Text>
+    {/*render todoList */}
+    <FlatList
+        data={todo_list}
+        renderItem={renderTodo}
+        keyExtractor={(item) => item.id.toString()}
+        contentContainerStyle={{ paddingBottom: 80 }}
+    />
+      <View style={styles.separator}></View>
 
         {/*Footer for button*/}
         <View style={styles.buttonPanel}>
@@ -35,11 +65,12 @@ export default function Home( {navigation}) {
                     </View>
                 }
                 width={300}
-                fun={() => navigation.navigate("AddNewTodo")}
+                fun={() => navigation.navigate("AddNewTodo", { setTodoList })}
+                backgroundColor = "blue"
+        
             />
         </View>
-        </View>
-
+    </View>
   );
 }
 
@@ -49,17 +80,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  header: {
-    alignItems: 'center',
-    //padding: 20,
-    //marginTop: 70,
-    paddingVertical: 5,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    textAlign: 'center',
   },
   listContainer: {
     flex: 1,
@@ -83,26 +103,20 @@ const styles = StyleSheet.create({
       fontSize: 15,
   },
   separator: {
+    //position: 'absolute',
     width: '100%',
     borderBottomWidth: 2,
     borderBottomColor: 'black',
-    marginBottom: 10,
-  },
-  addButton: {
-    width: "90%",
-    height: 50,
-    backgroundColor: '#32a87b',
-    alignSelf: 'center',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'row',
-    borderRadius: 10,
+    marginVertical: 10,
   },
   buttonPanel: {
+    position: 'absolute',
+    bottom: 10,
     flexDirection: 'row',  
-    justifyContent: 'space-between',
-    width: '80%',
-    marginBottom: 20,
+    justifyContent: 'center',
+    width: '100%',
+    alignSelf: 'center',
+    backgroundColor: "white",
     },
   
 });
