@@ -71,7 +71,7 @@ export default function AddNewTodo( {navigation, route}) {
             <Button label={
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Ionicons name="backspace-outline" size={25} color="white" />
-                    <Text style={{ marginLeft: 5, color: 'white', fontSize: 16 }}>Cancel</Text>
+                    <Text style={{ marginLeft: 5, color: 'white', fontSize: 16 }}>Back</Text>
                 </View>
             }
             fun={() => navigation.goBack()} 

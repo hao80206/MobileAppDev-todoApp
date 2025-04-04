@@ -11,7 +11,7 @@ export default function Home( {navigation, route}) {
 
   const [todo_list, setTodoList] = useState([]);
 
-  //Use asyncStroage for saving and retriving Data
+  //Use asyncStroage for saving and retrieving Data
   const saveData = async(value) => {
     try{
       const jsonValue = JSON.stringify(value);
