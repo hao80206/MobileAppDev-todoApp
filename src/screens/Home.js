@@ -1,20 +1,54 @@
-import { StyleSheet, Text, View, FlatList, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, FlatList} from 'react-native';
 import Button from '../components/Button';
 import Ionicons from "react-native-vector-icons/Ionicons";
 import Title from "../components/Title";
 import { useState, useEffect } from "react";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Todo from "./Todo";
 
 
 export default function Home( {navigation, route}) {
 
-  // Initial Todo List Object
-  const [todo_list, setTodoList] = useState ([
-    { id: 1, title: "Do mini Quiz 1", description: "Complete Quiz 1 before midnight", isDone: false },
-    { id: 2, title: "Watch lecture 1", description: "Watch the recorded lecture for Week 1", isDone: false },
-    { id: 3, title: "Write report", description: "Finish and submit the lab report", isDone: false }
-  ]);
+  const [todo_list, setTodoList] = useState([]);
 
+  //Use asyncStroage for saving and retriving Data
+  const saveData = async(value) => {
+    try{
+      const jsonValue = JSON.stringify(value);
+      await AsyncStorage.setItem('@todo_list', jsonValue);
+      console.log("Data stored successfully")
+    } catch (error) {
+      console.error("Error saving data: ", error);
+    }
+  };
+
+  const retrieveData = async() => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('@todo_list');
+      return jsonValue != null ? JSON.parse(jsonValue) : null;
+    } catch (error) {
+      console.error("Error retrieving data:", error);
+    }
+  };
+
+  useEffect (() => {
+    retrieveData().then(savedList => {
+      if (savedList) {
+        setTodoList(savedList);
+      } else {
+        setTodoList([
+          { id: 1, title: "Do mini Quiz 1", description: "Complete Quiz 1 before midnight", isDone: false },
+          { id: 2, title: "Watch lecture 1", description: "Watch the recorded lecture for Week 1", isDone: false },
+          { id: 3, title: "Write report", description: "Finish and submit the lab report", isDone: false }
+        ]);
+      }
+    });
+  },[]);
+
+  useEffect(() => {
+    saveData(todo_list);
+  }, [todo_list]);
+  
   // useEffect works every time new Todo is added and update setTodoList
   useEffect(() => {
     if (route.params?.newTodo) {

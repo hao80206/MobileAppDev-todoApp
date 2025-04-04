@@ -1,7 +1,4 @@
 import {View, StyleSheet, Text, Pressable} from "react-native";
-import Ionicons from "react-native-vector-icons/Ionicons";
-
-
 
 export default function Button({ label, fun = ()=> {}, width=120, backgroundColor = "#add8e6" }){
     return (

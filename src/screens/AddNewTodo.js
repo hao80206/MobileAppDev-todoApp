@@ -11,7 +11,7 @@ export default function AddNewTodo( {navigation, route}) {
     const [task, setTask] = useState("");
     const [description, setDescription] = useState ("");
 
-    //Function for adding newTodo and input validation
+    // for adding newTodo and input validation
     const saveTodo = (title, description) => {
       if (!title?.trim() || !description?.trim()) {
         Alert.alert("Both fields are required", "Please enter a title and description.");
@@ -22,7 +22,7 @@ export default function AddNewTodo( {navigation, route}) {
           id: Date.now(), 
           title: title,
           description: description,
-          isDone: false
+          isDone: false //defalut setting 
       };
 
       // Show notification for success
@@ -39,8 +39,6 @@ export default function AddNewTodo( {navigation, route}) {
       setTask(""); 
       setDescription("");
     }
-
-    
 
   //-------------------------Screen View --------------------------------//
   return (
